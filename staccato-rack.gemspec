@@ -26,6 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest', '>= 0.8.0'
   spec.add_development_dependency 'minitest-reporters'
   spec.add_development_dependency 'rack-test'
-  spec.add_development_dependency 'bundler', '~> 1.8'
+  spec.add_development_dependency 'bundler', '~> 1.6'
   spec.add_development_dependency 'rake', '~> 10.0'
 end
