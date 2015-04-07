@@ -22,8 +22,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+using in middleware:
 
+```ruby
+  use Staccato::Rack::Middleware, 'UA-TRACKING-KEY-HERE'
+```
+
+using in your Rails application, add the following line to your application config file (`config/application.rb` for Rails 3 and above, `config/environment.rb` for Rails 2):
+
+```ruby
+  config.middleware.use Staccato::Rack::Middleware, 'UA-TRACKING-KEY-HERE'
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.

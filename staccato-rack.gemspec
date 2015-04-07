@@ -9,14 +9,14 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Grant Speelman']
   spec.email         = ['grant.speelman@ubxd.com']
 
-  spec.summary       = 'TODO: Write a short summary, because Rubygems requires one.'
-  spec.description   = 'TODO: Write a longer description or delete this line.'
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = 'Simple rack middleware using Staccato'
+  spec.description   = 'Rack middleware to send analytics to google using Staccato with the aim to be used for apis'
+  spec.homepage      = 'https://github.com/unboxed/staccato-rack'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(/^(test|spec|features)\//) }
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = 'exe'
-  spec.executables   = spec.files.grep(/^exe\//) { |f| File.basename(f) }
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
   spec.add_dependency 'rack'
