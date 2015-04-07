@@ -6,7 +6,6 @@ module Staccato
   module Rack
     # middleware
     class Middleware
-      attr_reader :tracker
       attr_accessor :last_hit
 
       def initialize(app, tracking_id)
@@ -21,7 +20,7 @@ module Staccato
         # @last_hit = nil
         status, headers, body  = @app.call(env)
 
-        env['staccato.pageview'].track! if (200..299).include?(status.to_i)
+        env['staccato.tracker'].track(env['staccato.pageview'].params) if (200..299).include?(status.to_i)
 
         # return result
         [status, headers, body]
@@ -31,8 +30,8 @@ module Staccato
 
       def load_staccato_into_env(env)
         request = ::Rack::Request.new(env)
-        env['staccato.tracker'] = tracker
-        env['staccato.pageview'] = Staccato::Pageview.new(tracker,
+        env['staccato.tracker'] = @tracker
+        env['staccato.pageview'] = Staccato::Pageview.new(@tracker,
                                                           path: request.fullpath,
                                                           hostname: request.host,
                                                           user_agent: request.env['HTTP_USER_AGENT'],
