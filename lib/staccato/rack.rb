@@ -5,6 +5,7 @@ require 'ostruct'
 
 module Staccato
   module Rack
+    # Proxy Class to do page views
     class PageView < OpenStruct
       def initialize
         super
@@ -39,7 +40,7 @@ module Staccato
                                                                      user_ip: request.ip))
         add_custom_to_hit(hit)
         r = hit.track!
-        logger.info "GA Tracking: #{hit.params.inspect} => #{r.response.code if r}"
+        log_response(r, hit)
         hit
       end
 
@@ -51,8 +52,13 @@ module Staccato
           hit.add_custom_dimension(p, v)
         end
       end
+
+      def log_response(r, hit)
+        logger.info "GA Tracking: #{hit.params.inspect} => #{r.response.code if r}"
+      end
     end
 
+    # Null Logger clas
     class NullLogger
       def info(*)
       end
@@ -72,7 +78,7 @@ module Staccato
       end
 
       def call(env)
-        env['staccato.pageview'] = PageView.new.tap{|p| p.logger = @logger }
+        env['staccato.pageview'] = PageView.new.tap { |p| p.logger = @logger }
 
         @last_hit = nil
         status, headers, body  = @app.call(env)
