@@ -33,7 +33,7 @@ describe 'TestRack' do
 
   def default_params
     { 'v' => 1, 'tid' => 'UA-TEST', 'cid' => @middleware.last_hit.params['cid'],
-      't' => 'pageview', 'uip' => '127.0.0.1'}
+      't' => 'pageview', 'uip' => '127.0.0.1' }
   end
 
   before :each do
