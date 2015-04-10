@@ -27,7 +27,7 @@ using in middleware:
 using in your Rails application, add the following line to your application config file (`config/application.rb` for Rails 3 and above, `config/environment.rb` for Rails 2):
 
 ```ruby
-  config.middleware.use Staccato::Rack::Middleware, 'UA-TRACKING-KEY-HERE'
+  config.middleware.use Staccato::Rack::Middleware, 'UA-TRACKING-KEY-HERE', logger: Rails.logger
 ```
 ## Development
 

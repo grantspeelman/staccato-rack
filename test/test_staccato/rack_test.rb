@@ -1,4 +1,5 @@
 require File.expand_path '../../minitest_helper.rb', __FILE__
+require 'logger'
 
 require 'rack/test'
 
@@ -90,5 +91,12 @@ describe 'TestRack' do
     end
     get '/'
     @middleware.last_hit.params.must_equal(default_params.merge('dp' => '/', 'cm2' => 20))
+  end
+
+  it 'can set a custom logger' do
+    string_io = StringIO.new
+    @middleware = Staccato::Rack::Middleware.new(@test_rack, 'UA-TEST', logger: Logger.new(string_io))
+    get '/'
+    string_io.string.wont_equal ''
   end
 end

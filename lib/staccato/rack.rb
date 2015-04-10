@@ -38,7 +38,8 @@ module Staccato
                                                                      user_agent: request.env['HTTP_USER_AGENT'],
                                                                      user_ip: request.ip))
         add_custom_to_hit(hit)
-        hit.track!
+        r = hit.track!
+        logger.info "GA Tracking: #{hit.params.inspect} => #{r.response.code}"
         hit
       end
 
@@ -52,20 +53,26 @@ module Staccato
       end
     end
 
+    class NullLogger
+      def info(*)
+      end
+    end
+
     # middleware
     class Middleware
       # page view wrapper
 
       attr_accessor :last_hit
 
-      def initialize(app, tracking_id)
+      def initialize(app, tracking_id, options = {})
         @app = app
         @tracking_id = tracking_id
         @default_tracker = Staccato.tracker(tracking_id)
+        @logger = options[:logger] || NullLogger.new
       end
 
       def call(env)
-        env['staccato.pageview'] = PageView.new
+        env['staccato.pageview'] = PageView.new.tap{|p| p.logger = @logger }
 
         @last_hit = nil
         status, headers, body  = @app.call(env)
