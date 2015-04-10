@@ -99,4 +99,11 @@ describe 'TestRack' do
     get '/'
     string_io.string.wont_equal ''
   end
+
+  it 'can set a custom logger and works with no UA code' do
+    string_io = StringIO.new
+    @middleware = Staccato::Rack::Middleware.new(@test_rack, nil, logger: Logger.new(string_io))
+    get '/'
+    string_io.string.wont_equal ''
+  end
 end

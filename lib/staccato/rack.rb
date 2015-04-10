@@ -39,7 +39,7 @@ module Staccato
                                                                      user_ip: request.ip))
         add_custom_to_hit(hit)
         r = hit.track!
-        logger.info "GA Tracking: #{hit.params.inspect} => #{r.response.code}"
+        logger.info "GA Tracking: #{hit.params.inspect} => #{r.response.code if r}"
         hit
       end
 
