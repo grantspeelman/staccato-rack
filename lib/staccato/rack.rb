@@ -34,10 +34,9 @@ module Staccato
       private
 
       def track_hit(tracker, page_view_params, request)
-        hit = Staccato::Pageview.new(tracker, page_view_params.merge(path: request.fullpath,
-                                                                     hostname: request.host,
-                                                                     user_agent: request.env['HTTP_USER_AGENT'],
-                                                                     user_ip: request.ip))
+        hit = Staccato::Pageview.new(tracker, { path: request.fullpath,
+                                                user_agent: request.env['HTTP_USER_AGENT'],
+                                                user_ip: request.ip }.merge(page_view_params))
         add_custom_to_hit(hit)
         r = hit.track!
         log_response(r, hit)

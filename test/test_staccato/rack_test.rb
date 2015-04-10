@@ -33,7 +33,7 @@ describe 'TestRack' do
 
   def default_params
     { 'v' => 1, 'tid' => 'UA-TEST', 'cid' => @middleware.last_hit.params['cid'],
-      't' => 'pageview', 'uip' => '127.0.0.1', 'dh' => 'example.org' }
+      't' => 'pageview', 'uip' => '127.0.0.1'}
   end
 
   before :each do
@@ -51,6 +51,12 @@ describe 'TestRack' do
     @test_rack.status = 299
     get '/'
     @middleware.last_hit.params.must_equal(default_params.merge('dp' => '/'))
+  end
+
+  it 'tracks the remote ip' do
+    @test_rack.status = 299
+    get '/', {}, 'REMOTE_ADDR' => '1.2.3.4'
+    @middleware.last_hit.params.must_equal(default_params.merge('dp' => '/', 'uip' => '1.2.3.4'))
   end
 
   it 'wont track page if status 302' do
