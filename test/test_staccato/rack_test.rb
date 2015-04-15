@@ -129,9 +129,13 @@ describe 'TestRack' do
     get '/'
   end
 
+  it 'can set open_timeout' do
+    @middleware = Staccato::Rack::Middleware.new(@test_rack, 'UA-TEST', http_open_timeout: 20)
+    get '/'
+  end
+
   it 'will ignore Errors' do
     @page_view  = ReadTimeoutRaiser.new
-
     Staccato::Pageview.stub :new, @page_view do
       get '/'
     end

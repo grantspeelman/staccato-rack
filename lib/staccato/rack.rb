@@ -84,6 +84,7 @@ module Staccato
         @tracking_id = tracking_id
         @default_tracker = Staccato.tracker(tracking_id)
         @default_tracker.http_read_timeout = options[:http_read_timeout] if options[:http_read_timeout]
+        @default_tracker.http_open_timeout = options[:http_open_timeout] if options[:http_open_timeout]
         @logger = options[:logger] || NullLogger.new
       end
 
