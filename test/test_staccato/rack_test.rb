@@ -112,4 +112,9 @@ describe 'TestRack' do
     get '/'
     string_io.string.wont_equal ''
   end
+
+  it 'can set read_timeout' do
+    @middleware = Staccato::Rack::Middleware.new(@test_rack, 'UA-TEST', http_read_timeout: 20)
+    get '/'
+  end
 end
