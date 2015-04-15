@@ -34,12 +34,15 @@ module Staccato
       private
 
       def track_hit(tracker, page_view_params, request)
-        hit = Staccato::Pageview.new(tracker, { path: request.fullpath,
-                                                user_agent: request.env['HTTP_USER_AGENT'],
+        hit = Staccato::Pageview.new(tracker, { path: request.fullpath, user_agent: request.env['HTTP_USER_AGENT'],
                                                 user_ip: request.ip }.merge(page_view_params))
         add_custom_to_hit(hit)
-        r = hit.track!
-        log_response(r, hit)
+        begin
+          r = hit.track!
+          log_response(r, hit)
+        rescue => e
+          log_error(e, hit)
+        end
         hit
       end
 
@@ -55,11 +58,18 @@ module Staccato
       def log_response(r, hit)
         logger.info "GA Tracking: #{hit.params.inspect} => #{r.response.code if r}"
       end
+
+      def log_error(e, hit)
+        logger.error "GA Tracking: #{hit.params.inspect} => #{e.message}"
+      end
     end
 
     # Null Logger clas
     class NullLogger
       def info(*)
+      end
+
+      def error(*)
       end
     end
 

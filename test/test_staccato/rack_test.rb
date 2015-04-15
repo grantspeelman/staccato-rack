@@ -24,6 +24,17 @@ class TestRack
   end
 end
 
+# simple class to throw errors
+class ReadTimeoutRaiser
+  def track!
+    fail Timeout::Error, 'error', caller
+  end
+
+  def params
+    {}
+  end
+end
+
 describe 'TestRack' do
   include Rack::Test::Methods
 
@@ -116,5 +127,13 @@ describe 'TestRack' do
   it 'can set read_timeout' do
     @middleware = Staccato::Rack::Middleware.new(@test_rack, 'UA-TEST', http_read_timeout: 20)
     get '/'
+  end
+
+  it 'will ignore Errors' do
+    @page_view  = ReadTimeoutRaiser.new
+
+    Staccato::Pageview.stub :new, @page_view do
+      get '/'
+    end
   end
 end
