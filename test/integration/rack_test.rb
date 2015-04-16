@@ -106,4 +106,9 @@ describe 'Integration' do
     sleep(1) # wait for thread
     string_io.string.wont_equal ''
   end
+
+  it 'works with nil tracking key' do
+    @middleware = Staccato::Rack::Middleware.new(@test_rack, nil)
+    get '/'
+  end
 end

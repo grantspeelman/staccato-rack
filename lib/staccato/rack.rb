@@ -19,7 +19,7 @@ module Staccato
         @tracking_id = tracking_id
         @logger = options[:logger]
         @default_tracker = Staccato.tracker(tracking_id) do |c|
-          c.adapter = FaradayHttpAdaper.new(@logger)
+          c.adapter = FaradayHttpAdaper.new(@logger) unless tracking_id == nil
         end
       end
 

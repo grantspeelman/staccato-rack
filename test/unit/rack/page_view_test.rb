@@ -27,5 +27,11 @@ describe Staccato::Rack::PageView do
       hit = subject.track!(tracker, nil, request)
       hit.params.must_equal('v' => 1, 't' => 'pageview', 'dp' => '/', 'cm2' => 20)
     end
+
+    it 'tracks the page when 200 setting client_id' do
+      subject.client_id = 'hello-world'
+      hit = subject.track!(tracker, nil, request)
+      hit.params.must_equal('v' => 1, 't' => 'pageview', 'dp' => '/')
+    end
   end
 end
