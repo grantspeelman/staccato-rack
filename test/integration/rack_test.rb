@@ -38,6 +38,7 @@ describe 'Integration' do
   before :each do
     @test_rack = TestRack.new
     @middleware = Staccato::Rack::Middleware.new(@test_rack, 'UA-TEST')
+    stub_request(:post, 'https://ssl.google-analytics.com/collect').to_return(status: 200, body: '', headers: {})
   end
 
   it 'tracks the page when 200' do
@@ -102,13 +103,7 @@ describe 'Integration' do
     string_io = StringIO.new
     @middleware = Staccato::Rack::Middleware.new(@test_rack, 'UA-TEST', logger: Logger.new(string_io))
     get '/'
-    string_io.string.wont_equal ''
-  end
-
-  it 'can set a custom logger and works with no UA code' do
-    string_io = StringIO.new
-    @middleware = Staccato::Rack::Middleware.new(@test_rack, nil, logger: Logger.new(string_io))
-    get '/'
+    sleep(1) # wait for thread
     string_io.string.wont_equal ''
   end
 end

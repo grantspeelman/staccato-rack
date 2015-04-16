@@ -21,7 +21,9 @@ module Staccato
       def track!(default_tracker, tracking_id, request)
         page_view_params = marshal_dump
         if page_view_params[:client_id]
-          tracker = Staccato.tracker(tracking_id, page_view_params[:client_id])
+          tracker = Staccato.tracker(tracking_id, page_view_params[:client_id]) do |c|
+            c.adapter = FaradayHttpAdaper.new(logger)
+          end
         else
           tracker = default_tracker
         end
@@ -35,8 +37,7 @@ module Staccato
                                                 user_agent: request.env['HTTP_USER_AGENT'],
                                                 user_ip: request.ip }.merge(page_view_params))
         add_custom_to_hit(hit)
-        r = hit.track!
-        log_response(r, hit)
+        hit.track!
         hit
       end
 
@@ -47,10 +48,6 @@ module Staccato
         @custom_dimensions.each do |p, v|
           hit.add_custom_dimension(p, v)
         end
-      end
-
-      def log_response(r, hit)
-        logger.info "GA Tracking: #{hit.params.inspect} => #{r.response.code if r}"
       end
     end
   end

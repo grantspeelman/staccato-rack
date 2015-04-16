@@ -3,20 +3,11 @@ require 'rack/request'
 require 'staccato'
 
 require 'staccato/rack/version'
+require 'staccato/rack/faraday_http_adapter'
 require 'staccato/rack/page_view'
-
 
 module Staccato
   module Rack
-    # Null Logger class
-    class ToNullLogger < Logger
-      def initialize(*_args)
-      end
-
-      def add(*_args, &_block)
-      end
-    end
-
     # middleware
     class Middleware
       # page view wrapper
@@ -26,8 +17,10 @@ module Staccato
       def initialize(app, tracking_id, options = {})
         @app = app
         @tracking_id = tracking_id
-        @default_tracker = Staccato.tracker(tracking_id)
-        @logger = options[:logger] || ToNullLogger.new
+        @logger = options[:logger]
+        @default_tracker = Staccato.tracker(tracking_id) do |c|
+          c.adapter = FaradayHttpAdaper.new(@logger)
+        end
       end
 
       def call(env)
