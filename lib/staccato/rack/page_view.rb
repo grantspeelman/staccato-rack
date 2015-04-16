@@ -22,7 +22,7 @@ module Staccato
         page_view_params = marshal_dump
         if page_view_params[:client_id]
           tracker = Staccato.tracker(tracking_id, page_view_params[:client_id]) do |c|
-            c.adapter = FaradayHttpAdaper.new(logger) unless tracking_id == nil
+            c.adapter = FaradayHttpAdaper.new(logger) unless tracking_id.nil?
           end
         else
           tracker = default_tracker
