@@ -1,8 +1,8 @@
 require File.expand_path '../../../minitest_helper.rb', __FILE__
 
-describe Staccato::Rack::FaradayHttpAdaper do
+describe Staccato::Rack::FaradayAsyncHttpAdaper do
   let(:subject) do
-    Staccato::Rack::FaradayHttpAdaper.new
+    Staccato::Rack::FaradayAsyncHttpAdaper.new
   end
 
   describe '#post' do

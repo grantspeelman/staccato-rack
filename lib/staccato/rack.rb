@@ -3,7 +3,7 @@ require 'rack/request'
 require 'staccato'
 
 require 'staccato/rack/version'
-require 'staccato/rack/faraday_http_adapter'
+require 'staccato/rack/faraday_async_http_adapter'
 require 'staccato/rack/page_view'
 
 module Staccato
@@ -19,7 +19,7 @@ module Staccato
         @tracking_id = tracking_id
         @logger = options[:logger]
         @default_tracker = Staccato.tracker(tracking_id) do |c|
-          c.adapter = FaradayHttpAdaper.new(@logger) unless tracking_id.nil?
+          c.adapter = FaradayAsyncHttpAdaper.new(@logger) unless tracking_id.nil?
         end
       end
 

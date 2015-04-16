@@ -2,8 +2,8 @@ require 'faraday'
 
 module Staccato
   module Rack
-    # Proxy Class to do page views
-    class FaradayHttpAdaper
+    # Staccato HttpAdaper to do async post
+    class FaradayAsyncHttpAdaper
       def initialize(logger = nil)
         @logger = logger
         @conn = Faraday.new(url: 'https://ssl.google-analytics.com') do |faraday|
@@ -13,7 +13,7 @@ module Staccato
         end
       end
 
-      def post(data, url = '/collect')
+      def async_post(data, url = '/collect')
         Thread.new(data, url) do
           begin
             execute(data, url)
@@ -22,6 +22,8 @@ module Staccato
           end
         end
       end
+
+      alias_method :post, :async_post  # Faraday adapater expects a post method
 
       private
 

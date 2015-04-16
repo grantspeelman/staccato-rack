@@ -38,6 +38,8 @@ if you want logging in rails add a initializers file with the following
   end
 ```
 
+Note that all post to Google analytics are does in a separate thread to prevent holding up the rack request
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
