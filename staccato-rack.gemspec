@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'rack'
-  spec.add_dependency 'staccato'
+  spec.add_dependency 'staccato', '>= 0.3.0'
 
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'minitest', '>= 0.8.0'
