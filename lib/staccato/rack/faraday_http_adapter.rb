@@ -13,13 +13,23 @@ module Staccato
         end
       end
 
-      def post(data)
-        Thread.new(data) do |body_data|
-          @conn.post do |req|
-            req.url '/collect'
-            req.options.timeout = 1           # open/read timeout in seconds
-            req.body = body_data
+      def post(data, url = '/collect')
+        Thread.new(data, url) do
+          begin
+            execute(data, url)
+          rescue => e
+            @logger.error "Could not collect #{data.inspect} => #{e.message}"
           end
+        end
+      end
+
+      private
+
+      def execute(post_data, post_url)
+        @conn.post do |req|
+          req.url post_url
+          req.options.timeout = 2           # open/read timeout in seconds
+          req.body = post_data
         end
       end
     end
