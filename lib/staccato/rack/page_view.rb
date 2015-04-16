@@ -1,6 +1,3 @@
-require 'staccato/rack/version'
-require 'staccato'
-require 'rack/request'
 require 'ostruct'
 
 module Staccato

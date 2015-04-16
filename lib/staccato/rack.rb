@@ -1,14 +1,19 @@
+require 'logger'
+require 'rack/request'
+require 'staccato'
+
 require 'staccato/rack/version'
 require 'staccato/rack/page_view'
-require 'staccato'
-require 'rack/request'
-require 'ostruct'
+
 
 module Staccato
   module Rack
-    # Null Logger clas
-    class NullLogger
-      def info(*)
+    # Null Logger class
+    class ToNullLogger < Logger
+      def initialize(*_args)
+      end
+
+      def add(*_args, &_block)
       end
     end
 
@@ -22,7 +27,7 @@ module Staccato
         @app = app
         @tracking_id = tracking_id
         @default_tracker = Staccato.tracker(tracking_id)
-        @logger = options[:logger] || NullLogger.new
+        @logger = options[:logger] || ToNullLogger.new
       end
 
       def call(env)

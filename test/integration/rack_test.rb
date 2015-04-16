@@ -1,5 +1,4 @@
 require File.expand_path '../../minitest_helper.rb', __FILE__
-require 'logger'
 
 require 'rack/test'
 
@@ -24,7 +23,7 @@ class TestRack
   end
 end
 
-describe 'TestRack' do
+describe 'Integration' do
   include Rack::Test::Methods
 
   def app
