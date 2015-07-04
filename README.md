@@ -21,19 +21,22 @@ Or install it yourself as:
 using in middleware:
 
 ```ruby
+  require 'staccato/rack'
   use Staccato::Rack::Middleware, 'UA-TRACKING-KEY-HERE'
 ```
 
 using in your Rails application, add the following line to your application config file (`config/application.rb` for Rails 3 and above, `config/environment.rb` for Rails 2):
 
 ```ruby
+  require 'staccato/rack'
   config.middleware.use Staccato::Rack::Middleware, 'UA-TRACKING-KEY-HERE'
 ```
 
 if you want logging in rails add a initializers file with the following
 
 ```ruby
-  ContikiApi::Application.configure do
+  require 'staccato/rack'
+  MyApi::Application.configure do
     config.middleware.use Staccato::Rack::Middleware, Rails.application.secrets.ga_tracking_id, logger: Rails.logger
   end
 ```
