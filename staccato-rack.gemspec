@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Simple rack middleware using Staccato'
   spec.description   = 'Rack middleware to send analytics to google using Staccato with the aim to be used for apis'
-  spec.homepage      = 'https://github.com/unboxed/staccato-rack'
+  spec.homepage      = 'https://github.com/grantspeelman/staccato-rack'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
