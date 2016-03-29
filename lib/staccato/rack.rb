@@ -27,9 +27,9 @@ module Staccato
         env['staccato.pageview'] = PageView.new.tap { |p| p.logger = @logger }
 
         @last_hit = nil
-        status, headers, body  = @app.call(env)
+        status, headers, body = @app.call(env)
 
-        if (200..299).include?(status.to_i)
+        if (200..299).cover?(status.to_i)
           @last_hit = env['staccato.pageview'].track!(@default_tracker, @tracking_id, ::Rack::Request.new(env))
         end
 

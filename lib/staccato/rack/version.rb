@@ -2,6 +2,6 @@
 module Staccato
   # rack module
   module Rack
-    VERSION = '0.4.3'
+    VERSION = '0.4.3'.freeze
   end
 end

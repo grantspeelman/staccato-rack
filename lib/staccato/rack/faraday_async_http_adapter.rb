@@ -23,14 +23,14 @@ module Staccato
         end
       end
 
-      alias_method :post, :async_post  # Faraday adapater expects a post method
+      alias post async_post # Faraday adapater expects a post method
 
       private
 
       def execute(post_data, post_url)
         @conn.post do |req|
           req.url post_url
-          req.options.timeout = 2           # open/read timeout in seconds
+          req.options.timeout = 2 # open/read timeout in seconds
           req.body = post_data
         end
       end
