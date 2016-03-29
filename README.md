@@ -1,5 +1,8 @@
 # Staccato::Rack
 
+[![Gem Version](https://badge.fury.io/rb/staccato-rack.svg)](https://badge.fury.io/rb/staccato-rack)
+[![Build Status](https://travis-ci.org/grantspeelman/staccato-rack.png?branch=master)](https://travis-ci.org/grantspeelman/staccato-rack)
+
 ## Installation
 
 Add this line to your application's Gemfile:
