@@ -20,13 +20,13 @@ module Staccato
 
       def track!(default_tracker, tracking_id, request)
         page_view_params = marshal_dump
-        if page_view_params[:client_id]
-          tracker = Staccato.tracker(tracking_id, page_view_params[:client_id]) do |c|
-            c.adapter = FaradayAsyncHttpAdaper.new(logger) unless tracking_id.nil?
-          end
-        else
-          tracker = default_tracker
-        end
+        tracker = if page_view_params[:client_id]
+                    Staccato.tracker(tracking_id, page_view_params[:client_id]) do |c|
+                      c.adapter = FaradayAsyncHttpAdaper.new(logger) unless tracking_id.nil?
+                    end
+                  else
+                    default_tracker
+                  end
         track_hit(tracker, page_view_params, request)
       end
 

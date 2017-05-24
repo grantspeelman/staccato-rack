@@ -3,8 +3,7 @@ require 'rr'
 
 # Null Logger class
 class DummyLogger
-  def info(*_args, &_block)
-  end
+  def info(*_args, &_block); end
 end
 
 describe Staccato::Rack::PageView do
@@ -15,7 +14,7 @@ describe Staccato::Rack::PageView do
   end
   let(:request) do
     r = ::Rack::Request.new({})
-    stub(r).env { Hash.new }
+    stub(r).env { {} }
     stub(r).fullpath { '/' }
     r
   end
